@@ -25,7 +25,7 @@ defineProps<{ songs: Song[] }>()
           <v-list-item-title>{{ song.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-card>
+  </v-card>
 </template>
 
 <style>
