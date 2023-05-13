@@ -5,7 +5,8 @@ import { addSong, getSongs } from './firebase/songs';
 import SongsList from './components/SongsList.vue';
 import SongsPlayer from './components/SongsPlayer.vue';
 
-const isLoading = ref(false)
+const isLoading = ref(false);
+const addedNotificationShow = ref(false);
 
 const songs = ref<Song[]>([]);
 const playingSongs: Song[] = [
@@ -44,6 +45,7 @@ const addToFavorite = async (id: string) => {
   const song = playingSongs.find(song => song.id === id)
   if (song) {
     await addSong(song)
+    addedNotificationShow.value = true;
   }
 }
 
@@ -53,6 +55,14 @@ const addToFavorite = async (id: string) => {
   <main>
     <SongsPlayer :songs="playingSongs" @add-to-favorite="addToFavorite"/>
     <SongsList :songs="songs" :isLoading="isLoading" />
+    <v-snackbar
+      :timeout="2000"
+      color="blue-grey"
+      rounded="pill"
+      v-model="addedNotificationShow"
+      >
+      Song added to favorites
+    </v-snackbar>
   </main>
 </template>
 
